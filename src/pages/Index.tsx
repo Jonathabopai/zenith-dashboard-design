@@ -491,7 +491,8 @@ const Index = () => {
         </div>
       </footer>
 
-      <style jsx>{`
+      <style>
+        {`
         /* Custom styles for enhanced dashboard */
         .dashboard-container {
           position: relative;
@@ -642,7 +643,7 @@ const Index = () => {
         }
 
         .metric-value {
-          font-size: 2.2rem;
+          font-size: ${"2.2rem"};
           margin-bottom: 0.2rem;
           background: linear-gradient(90deg, var(--primary), var(--secondary));
           -webkit-background-clip: text;
@@ -1063,7 +1064,8 @@ const Index = () => {
           line-height: 1.6;
           color: var(--gray-700);
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };
