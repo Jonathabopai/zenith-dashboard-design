@@ -307,6 +307,18 @@ main {
 .banner-content {
     max-width: 60%;
     z-index: 1;
+    animation: slideInUp 1s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .badge {
@@ -324,11 +336,22 @@ main {
     font-size: 2rem;
     margin-bottom: 0.8rem;
     color: var(--gray-900);
+    animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .banner-content p {
     color: var(--gray-700);
     font-size: 1.1rem;
+    animation: fadeIn 2s ease-out;
 }
 
 .dashboard-summary {
@@ -347,6 +370,24 @@ main {
     gap: 1rem;
     box-shadow: var(--shadow-sm);
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.metric-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.metric-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.metric-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.metric-card:nth-child(4) {
+    animation-delay: 0.4s;
 }
 
 .metric-card:hover {
@@ -400,9 +441,13 @@ main {
 }
 
 .metric-value {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: 600;
     line-height: 1.1;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .metric-label {
@@ -422,6 +467,25 @@ main {
     box-shadow: var(--shadow-sm);
     overflow: hidden;
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+}
+
+.dashboard-card:nth-child(2) {
+    animation-delay: 0.6s;
+}
+
+.dashboard-card:nth-child(3) {
+    animation-delay: 0.7s;
+}
+
+.dashboard-card:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+.dashboard-card:nth-child(5) {
+    animation-delay: 0.9s;
 }
 
 .dashboard-card:hover {
@@ -490,6 +554,71 @@ main {
     position: relative;
 }
 
+/* CSS-only Charts */
+.donut-chart {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.donut-segment {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    clip: rect(0, 100px, 200px, 0);
+}
+
+.donut-segment span {
+    position: absolute;
+    font-size: 0;
+}
+
+.active-segment {
+    background-color: var(--primary);
+    clip-path: polygon(50% 50%, 50% 0, 100% 0, 100% 100%, 0 100%, 0 0, 50% 0);
+    transform: rotate(45deg);
+}
+
+.maintenance-segment {
+    background-color: var(--secondary);
+    clip-path: polygon(50% 50%, 50% 0, 75% 0, 75% 20%, 50% 20%);
+    transform: rotate(180deg);
+}
+
+.error-segment {
+    background-color: var(--error);
+    clip-path: polygon(50% 50%, 50% 0, 75% 0, 75% 20%, 50% 20%);
+    transform: rotate(270deg);
+}
+
+.donut-center {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    background-color: white;
+    border-radius: 50%;
+    top: 15%;
+    left: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.donut-percent {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.donut-label {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
 .chart-legend {
     display: flex;
     justify-content: center;
@@ -521,9 +650,362 @@ main {
     background-color: var(--error);
 }
 
+.legend-color.connection {
+    background-color: var(--error);
+}
+
+.legend-color.authentication {
+    background-color: var(--warning);
+}
+
+.legend-color.script {
+    background-color: var(--success);
+}
+
 .legend-label {
     font-size: 0.9rem;
     color: var(--gray-700);
+}
+
+/* Bar Chart */
+.bar-chart {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 30px;
+    padding-left: 30px;
+}
+
+.bar-chart-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    width: 100%;
+    height: calc(100% - 30px);
+}
+
+.bar {
+    background: linear-gradient(to top, var(--primary-light), var(--primary));
+    width: 40px;
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    transition: height 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bar-value {
+    position: absolute;
+    top: -25px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.bar-label {
+    position: absolute;
+    bottom: -25px;
+    font-size: 0.8rem;
+    text-align: center;
+    width: 100px;
+    transform: translateX(-30px);
+    color: var(--gray-700);
+}
+
+.chart-axis-y {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: calc(100% - 30px);
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+}
+
+.chart-axis-y span {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+}
+
+.chart-axis-x {
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+    width: calc(100% - 30px);
+    display: flex;
+    justify-content: space-around;
+}
+
+.chart-axis-x span {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    transform: translateX(-50%);
+}
+
+/* Line Chart */
+.line-chart {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 30px;
+    padding-left: 30px;
+}
+
+.line-points {
+    position: absolute;
+    top: 0;
+    left: 30px;
+    right: 0;
+    bottom: 30px;
+    background: linear-gradient(180deg, 
+        rgba(0, 83, 159, 0.1) 0%, 
+        rgba(0, 83, 159, 0.05) 50%, 
+        rgba(0, 83, 159, 0) 100%);
+    background-image: 
+        linear-gradient(to right, transparent 10%, var(--primary) 10%, var(--primary) 12%, transparent 12%),
+        linear-gradient(to right, transparent 30%, var(--primary) 30%, var(--primary) 32%, transparent 32%),
+        linear-gradient(to right, transparent 50%, var(--primary) 50%, var(--primary) 52%, transparent 52%),
+        linear-gradient(to right, transparent 70%, var(--primary) 70%, var(--primary) 72%, transparent 72%),
+        linear-gradient(to right, transparent 90%, var(--primary) 90%, var(--primary) 92%, transparent 92%);
+}
+
+.line-point {
+    width: 10px;
+    height: 10px;
+    background-color: var(--white);
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, 50%);
+}
+
+.line-points::before {
+    content: "";
+    position: absolute;
+    top: 60%;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background-color: var(--primary);
+    transform: translateY(-50%);
+    clip-path: polygon(
+        0% 0%, 
+        25% 25%, 
+        50% 12.5%, 
+        75% 37.5%, 
+        100% 25%,
+        100% 100%,
+        0% 100%
+    );
+}
+
+/* Pie Chart */
+.pie-chart {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: var(--error);
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.pie-segment {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+}
+
+.pie-segment:hover .pie-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pie-tooltip {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: var(--gray-800);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.pie-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--gray-800) transparent transparent transparent;
+}
+
+.pie-segment.connection {
+    clip-path: polygon(50% 50%, 50% 0, 100% 0, 100% 100%, 0 100%, 0 0, 50% 0);
+    background-color: var(--error);
+    transform: rotate(0deg);
+}
+
+.pie-segment.authentication {
+    clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);
+    background-color: var(--warning);
+    transform: rotate(0deg);
+}
+
+.pie-segment.script {
+    clip-path: polygon(50% 50%, 50% 100%, 0 100%, 0 0, 50% 0);
+    background-color: var(--success);
+    transform: rotate(0deg);
+}
+
+.pie-legend {
+    margin-top: 20px;
+}
+
+/* Heatmap Chart */
+.heatmap-chart {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 30px;
+}
+
+.heatmap-row {
+    display: flex;
+    justify-content: space-around;
+    height: 50px;
+}
+
+.heatmap-cell {
+    width: 30px;
+    height: 100%;
+    background-color: var(--primary);
+    border-radius: 4px;
+    margin: 0 5px;
+    opacity: var(--heat);
+    position: relative;
+}
+
+.heatmap-cell:hover::after {
+    content: attr(data-value);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--gray-800);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+}
+
+/* Radar Chart */
+.radar-chart {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radar-axis {
+    width: 180px;
+    height: 180px;
+    position: absolute;
+    border: 1px solid var(--gray-300);
+    border-radius: 50%;
+}
+
+.radar-axis::before, .radar-axis::after {
+    content: "";
+    position: absolute;
+    background-color: var(--gray-300);
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    transform: translateY(-50%);
+}
+
+.radar-axis::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.radar-circle {
+    position: absolute;
+    border: 1px dashed var(--gray-300);
+    border-radius: 50%;
+}
+
+.radar-circle.c1 {
+    width: 120px;
+    height: 120px;
+}
+
+.radar-circle.c2 {
+    width: 80px;
+    height: 80px;
+}
+
+.radar-circle.c3 {
+    width: 40px;
+    height: 40px;
+}
+
+.radar-area {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(
+        50% 20%, 
+        85% 45%, 
+        65% 80%, 
+        40% 90%, 
+        25% 60%
+    );
+    background-color: rgba(0, 83, 159, 0.1);
+    border: 2px solid var(--primary);
+}
+
+.radar-point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-90px * var(--dist)));
+    transform-origin: center;
+}
+
+.radar-point span {
+    position: absolute;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    color: var(--gray-700);
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.radar-point:hover span {
+    opacity: 1;
 }
 
 .automation-list {
@@ -540,6 +1022,27 @@ main {
     background-color: var(--gray-50);
     border-radius: var(--radius-md);
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.automation-item:nth-child(1) {
+    animation-delay: 0.7s;
+}
+
+.automation-item:nth-child(2) {
+    animation-delay: 0.9s;
 }
 
 .automation-item:hover {
@@ -661,6 +1164,16 @@ main {
     background-color: var(--gray-50);
     border-radius: var(--radius-md);
     transition: transform var(--transition-fast);
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.scheduled-action:nth-child(1) {
+    animation-delay: 0.7s;
+}
+
+.scheduled-action:nth-child(2) {
+    animation-delay: 0.9s;
 }
 
 .scheduled-action:hover {
@@ -715,6 +1228,16 @@ main {
     background-color: var(--gray-50);
     border-radius: var(--radius-md);
     transition: transform var(--transition-fast);
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.insight-card:nth-child(1) {
+    animation-delay: 0.7s;
+}
+
+.insight-card:nth-child(2) {
+    animation-delay: 0.9s;
 }
 
 .insight-card:hover {
@@ -907,49 +1430,6 @@ footer {
         justify-content: space-around;
         margin-top: 1rem;
     }
-}
-
-/* Animation Classes */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideInUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
-}
-
-.slide-in-up {
-    animation: slideInUp 0.5s ease-out;
-}
-
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-/* Glassmorphism effect */
-.glass {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Custom scrollbar */
