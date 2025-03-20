@@ -1,18 +1,575 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>zenith-dashboard-design</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
 
-  <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Gerencial de Automações | Bradesco</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo"></div>
+            <h1>ServiceNow</h1>
+        </div>
+        <div class="header-controls">
+            <div class="search-bar">
+                <input type="text" placeholder="Pesquisar automações...">
+                <div class="search-icon"></div>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar"></div>
+                <span>Admin</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li class="active"><span class="nav-icon dashboard-icon"></span>Dashboard</li>
+            <li><span class="nav-icon automations-icon"></span>Automações</li>
+            <li><span class="nav-icon logs-icon"></span>Logs</li>
+            <li><span class="nav-icon settings-icon"></span>Configurações</li>
+            <li><span class="nav-icon reports-icon"></span>Relatórios</li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="welcome-banner">
+            <div class="banner-content">
+                <div class="badge">Dashboard</div>
+                <h2>Gerenciamento de Automações no ServiceNow</h2>
+                <p>Visualize métricas detalhadas sobre automações em operação, status, logs e desempenho geral das execuções.</p>
+            </div>
+            <div class="banner-graphic"></div>
+        </section>
+
+        <div class="dashboard-summary">
+            <div class="metric-card">
+                <span class="metric-icon total-icon"></span>
+                <div class="metric-data">
+                    <span class="metric-value">45</span>
+                    <span class="metric-label">Total de Automações</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-icon active-icon"></span>
+                <div class="metric-data">
+                    <span class="metric-value">35</span>
+                    <span class="metric-label">Automações Ativas</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-icon maintenance-icon"></span>
+                <div class="metric-data">
+                    <span class="metric-value">5</span>
+                    <span class="metric-label">Em Manutenção</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-icon error-icon"></span>
+                <div class="metric-data">
+                    <span class="metric-value">5</span>
+                    <span class="metric-label">Com Erro</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card card-large">
+                <div class="card-header">
+                    <h3>Visão Geral do Sistema</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="statusDistributionChart"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-color active"></span>
+                            <span class="legend-label">Ativas (35)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color maintenance"></span>
+                            <span class="legend-label">Em manutenção (5)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color error"></span>
+                            <span class="legend-label">Com erro (5)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Execuções Diárias</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="executionsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Tempo Médio de Execução</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="executionTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card card-large">
+                <div class="card-header">
+                    <h3>Automações em Destaque</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="automation-list">
+                        <div class="automation-item">
+                            <div class="automation-icon report"></div>
+                            <div class="automation-details">
+                                <h4>Envio de Relatórios</h4>
+                                <div class="automation-meta">
+                                    <span class="meta-item status-active">Ativa</span>
+                                    <span class="meta-item">Financeiro</span>
+                                    <span class="meta-item">João Silva</span>
+                                </div>
+                            </div>
+                            <div class="automation-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">20</span>
+                                    <span class="stat-label">Execuções</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">3min</span>
+                                    <span class="stat-label">Tempo Médio</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="automation-item">
+                            <div class="automation-icon data"></div>
+                            <div class="automation-details">
+                                <h4>Coleta de Dados</h4>
+                                <div class="automation-meta">
+                                    <span class="meta-item status-maintenance">Manutenção</span>
+                                    <span class="meta-item">RH</span>
+                                    <span class="meta-item">Ana Souza</span>
+                                </div>
+                            </div>
+                            <div class="automation-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">15</span>
+                                    <span class="stat-label">Execuções</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">4min</span>
+                                    <span class="stat-label">Tempo Médio</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Distribuição de Erros</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="errorDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Picos de Execução</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="executionPeaksChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Desvios Máximos</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="maxDeviationsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Próximas Ações</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="scheduled-actions">
+                        <div class="scheduled-action">
+                            <div class="action-time">
+                                <span class="time">08:00</span>
+                                <span class="date">11/05</span>
+                            </div>
+                            <div class="action-details">
+                                <h4>Envio de Relatórios</h4>
+                                <span class="action-meta">Execução Agendada</span>
+                            </div>
+                        </div>
+                        <div class="scheduled-action">
+                            <div class="action-time">
+                                <span class="time">09:30</span>
+                                <span class="date">11/05</span>
+                            </div>
+                            <div class="action-details">
+                                <h4>Coleta de Dados</h4>
+                                <span class="action-meta">Manutenção Programada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card card-large">
+                <div class="card-header">
+                    <h3>Insights e Recomendações</h3>
+                    <div class="card-controls">
+                        <span class="refresh-icon"></span>
+                        <span class="more-icon"></span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="insights-container">
+                        <div class="insight-card">
+                            <div class="insight-icon warning"></div>
+                            <div class="insight-content">
+                                <h4>Alta Taxa de Erro</h4>
+                                <p>A automação "Coleta de Dados" apresenta taxa de erro acima do normal. Recomenda-se revisão.</p>
+                            </div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon success"></div>
+                            <div class="insight-content">
+                                <h4>Desempenho Otimizado</h4>
+                                <p>A automação "Envio de Relatórios" mantém execução eficiente e consistente.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2023 Dashboard de Automações ServiceNow</p>
+            <div class="footer-links">
+                <a href="#">Termos</a>
+                <a href="#">Privacidade</a>
+                <a href="#">Suporte</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Donut Chart - Status Distribution
+        const statusCtx = document.getElementById('statusDistributionChart').getContext('2d');
+        const statusChart = new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Ativas', 'Em manutenção', 'Com erro'],
+                datasets: [{
+                    data: [35, 5, 5],
+                    backgroundColor: ['#00539F', '#FF6B00', '#D81B60'],
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    borderRadius: 5,
+                    spacing: 3
+                }]
+            },
+            options: {
+                cutout: '70%',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        titleColor: '#333',
+                        bodyColor: '#666',
+                        borderColor: 'rgba(0, 0, 0, 0.1)',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}`;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+
+        // Bar Chart - Executions
+        const executionsCtx = document.getElementById('executionsChart').getContext('2d');
+        const executionsChart = new Chart(executionsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Envio de Relatórios', 'Coleta de Dados'],
+                datasets: [{
+                    label: 'Execuções Hoje',
+                    data: [20, 15],
+                    backgroundColor: ['rgba(0, 83, 159, 0.8)', 'rgba(0, 83, 159, 0.6)'],
+                    borderColor: 'transparent',
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            borderDash: [3, 3]
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+
+        // Line Chart - Execution Time
+        const timeCtx = document.getElementById('executionTimeChart').getContext('2d');
+        const timeChart = new Chart(timeCtx, {
+            type: 'line',
+            data: {
+                labels: ['01/05', '02/05', '03/05', '04/05', '05/05'],
+                datasets: [{
+                    label: 'Tempo Médio (min)',
+                    data: [3, 4, 3.5, 4.2, 3.8],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 83, 159, 0.1)',
+                    borderColor: '#00539F',
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#00539F',
+                    pointBorderWidth: 2,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            borderDash: [3, 3]
+                        }
+                    }
+                },
+                animation: {
+                    duration: 2000
+                }
+            }
+        });
+
+        // Pie Chart - Error Distribution
+        const errorCtx = document.getElementById('errorDistributionChart').getContext('2d');
+        const errorChart = new Chart(errorCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Erro de Conexão', 'Erro de Autenticação', 'Erro de Script'],
+                datasets: [{
+                    data: [40, 30, 30],
+                    backgroundColor: ['#D81B60', '#FF9800', '#1E88E5'],
+                    borderColor: 'transparent',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 10,
+                            padding: 10,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateRotate: true,
+                    duration: 1500
+                }
+            }
+        });
+
+        // Radar Chart - Max Deviations
+        const deviationsCtx = document.getElementById('maxDeviationsChart').getContext('2d');
+        const deviationsChart = new Chart(deviationsCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Envio de Relatórios', 'Coleta de Dados', 'Processamento', 'Validação', 'Notificação'],
+                datasets: [{
+                    label: 'Desvios (min)',
+                    data: [2, 5, 3, 1, 4],
+                    backgroundColor: 'rgba(0, 83, 159, 0.2)',
+                    borderColor: '#00539F',
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#00539F',
+                    pointBorderWidth: 2,
+                    pointRadius: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        ticks: {
+                            display: false
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1800
+                }
+            }
+        });
+
+        // Heat Map - Execution Peaks
+        const peaksCtx = document.getElementById('executionPeaksChart').getContext('2d');
+        const peaksChart = new Chart(peaksCtx, {
+            type: 'bar',
+            data: {
+                labels: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00'],
+                datasets: [{
+                    label: 'Picos de Execução',
+                    data: [5, 12, 8, 15, 10, 4],
+                    backgroundColor: function(context) {
+                        const value = context.dataset.data[context.dataIndex];
+                        const alpha = value / 20;  // Normalize based on max value
+                        return `rgba(0, 83, 159, ${alpha})`;
+                    },
+                    borderRadius: 4,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            borderDash: [3, 3]
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1500
+                }
+            }
+        });
+    </script>
+</body>
 </html>
